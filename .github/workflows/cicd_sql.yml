@@ -1,4 +1,4 @@
-name: Deploy SQL Scripts to PostgreSQL on GCP
+name: Deploy SQL Scripts to PostgreSQL
 
 on:
   push:
@@ -11,12 +11,12 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Set up GCP Credentials
-      uses: actions/setup-gcloud@v2
+    - name: Set up Google Cloud SDK
+      uses: GoogleCloudPlatform/github-action-setup-gcloud@v1
       with:
         service_account_key: ${{ secrets.FEWS_SA_KEY }}
 
     - name: Execute SQL Scripts
       run: |
-        gcloud sql connect fews --user=postgres --password=rocky --host=34.47.174.243 --port=5432
+        gcloud sql connect tidy-crane-440110-e1:asia-south1:fews --user=postgres --password=rocky --host=34.47.174.243 --port=5432
         pg_restore --verbose --clean --single-transaction --dbname="postgres://postgres:rocky@localhost:5432/postgres" --format=plain --file="ssc_chittoor.sql"
