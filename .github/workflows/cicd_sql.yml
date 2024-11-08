@@ -1,4 +1,4 @@
-name: Deploy SQL Scripts to PostgreSQL
+name: Deploy SQL Scripts to PostgreSQL in GCP
 
 on:
   push:
@@ -18,6 +18,12 @@ jobs:
 
     - name: Install PostgreSQL client
       run: sudo apt-get install -y postgresql-client
+
+    - name: Start Cloud SQL Proxy
+      run: |
+        wget https://dl.google.com/cloudsql/cloud_sql_proxy.linux.amd64 -O cloud_sql_proxy
+        chmod +x cloud_sql_proxy
+        ./cloud_sql_proxy -dir=/cloudsql -instances=tidy-crane-440110-e1:asia-south1:fews=tcp:5432 &
 
     - name: Execute SQL Scripts
       env:
