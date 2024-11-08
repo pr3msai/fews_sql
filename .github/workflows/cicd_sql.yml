@@ -1,4 +1,4 @@
-name: Deploy SQL Scripts to PostgreSQL
+name: Deploy SQL Scripts to PostgreSQL POC
 
 on:
   push:
